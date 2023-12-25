@@ -49,11 +49,11 @@ Here are the token types for the attributes section:
         "original_value": "//" + comment,
         "position": comment_start_position
     },{
-        type: "REMOVED_TEXT",
+        type: "TRANSITION_TEXT",
         value: "\\",
         original_value: "\\",
         position: text_walker.get_current_text_pos(),
-        _descr: "only needed on transition to main section"
+        _descr: "needed on transition between enviroments, but the escape char has for new env no meaning"
     },{
         type: "END_OF_ATTR_SECTION",
         value: "",

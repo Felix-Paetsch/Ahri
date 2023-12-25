@@ -21,8 +21,8 @@ export default (tokens, text_walker) => {
             text_walker.throw_error_at_current("Unexpected attribute closing bracket. You may want to escape it: \"\\]\"");
         } else if (char == "\\" && ["]", "["].includes(text_walker.look_ahead())){
             tokens.push({
-                type: "REMOVED_TEXT",
-                value: "\\",
+                type: "TRANSITION_TEXT",
+                value: "",
                 original_value: "\\",
                 position: text_walker.get_current_text_pos()
             });

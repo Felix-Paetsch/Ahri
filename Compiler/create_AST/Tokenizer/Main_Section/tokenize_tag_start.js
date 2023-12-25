@@ -1,4 +1,4 @@
-// Current char is the first " " char
+// Current char is the first ">" char
 
 export default function tokenize_whitespace(text_walker){
     const space_start_position = text_walker.get_current_text_pos();
@@ -20,3 +20,12 @@ export default function tokenize_whitespace(text_walker){
         "position": space_start_position
     }]
 }
+
+/*
+
+Parse Tag Starting Stuff
+Parse Tag Name,
+Parse Tag Attributes (with, without added stuff)
+Parse Tag String Attributes
+
+*/

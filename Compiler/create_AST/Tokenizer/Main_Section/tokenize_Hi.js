@@ -24,7 +24,7 @@ export default function tokenize_Hi(text_walker){
     for (let char of text_walker.next()){
         if (char === false) {
             break;
-        } else if (char == "\\" && text_walker.look_ahead() == "\\"){
+        } else if (char == "/" && text_walker.look_ahead() == "/"){
             text_walker.step_back();
             break;
         } else if (char == "\\" && ["\\", "/"].includes(text_walker.look_ahead())){
