@@ -1,6 +1,6 @@
 // Current char is the first "/"
 
-export default function tokenize_comment(text_walker){
+export default function tokenize_single_line_comment(text_walker){
     const comment_start_position = text_walker.get_current_text_pos();
     let comment = "";
 

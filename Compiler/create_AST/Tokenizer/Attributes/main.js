@@ -1,5 +1,6 @@
 import tokenize_attr from './tokenize_attribute.js';
-import tokenize_comment from '../Common/tokenize_comment.js';
+import tokenize_single_line_comment from '../Common/tokenize_single_line_comment.js';
+import tokenize_multi_line_comment from '../Common/tokenize_multi_line_comment.js';
 import tokenize_whitespace from './tokenize_whitespace.js';
 
 export default (tokens, text_walker) => {
@@ -12,7 +13,10 @@ export default (tokens, text_walker) => {
             tokens.push(...tokenize_attr(text_walker));
             // Text walker is on the "]"
         } else if (char == "/" && text_walker.look_ahead() == "/"){
-            tokens.push(...tokenize_comment(text_walker));
+            tokens.push(...tokenize_single_line_comment(text_walker));
+            // Text walker is on char before "\n" or EOF (those are not parsed)
+        } else if (char == "/" && text_walker.look_ahead() == "*"){
+            tokens.push(...tokenize_multi_line_comment(text_walker));
             // Text walker is on char before "\n" or EOF (those are not parsed)
         } else if (/\s/.test(char)){
             tokens.push(...tokenize_whitespace(text_walker));

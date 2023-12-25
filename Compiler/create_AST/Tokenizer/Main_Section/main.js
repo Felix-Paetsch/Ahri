@@ -1,5 +1,6 @@
 import tokenize_spaces from './tokenize_spaces.js';
-import tokenize_comment from '../Common/tokenize_comment.js';
+import tokenize_single_line_comment from '../Common/tokenize_single_line_comment.js';
+import tokenize_multi_line_comment from '../Common/tokenize_multi_line_comment.js';
 import tokenize_Hi from './tokenize_Hi.js';
 import tokenize_sep from './tokenize_sep.js';
 import tokenize_tag_start from "./tokenize_tag_start.js";
@@ -23,8 +24,11 @@ export default (tokens, text_walker) => {
         } else if (char == "<"){
             tokens.push(...tokenize_tag_end(text_walker));
         } else if (char == "/" && text_walker.look_ahead() == "/"){
-            tokens.push(...tokenize_comment(text_walker));
+            tokens.push(...tokenize_single_line_comment(text_walker));
             // Current char is before \n
+        } else if (char == "/" && text_walker.look_ahead() == "/"){
+            tokens.push(...tokenize_multi_line_comment(text_walker));
+            // Current char is "/"
         } else if (" " == char){
             tokens.push(...tokenize_spaces(text_walker));
             // Current char is last whitespace
