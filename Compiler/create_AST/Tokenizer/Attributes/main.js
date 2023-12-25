@@ -1,5 +1,5 @@
 import tokenize_attr from './tokenize_attribute.js';
-import tokenize_comment from './tokenize_comment.js';
+import tokenize_comment from '../Common/tokenize_comment.js';
 import tokenize_whitespace from './tokenize_whitespace.js';
 
 export default (tokens, text_walker) => {
