@@ -44,12 +44,17 @@ export default class TextWalker {
 
             return char;
         } else {
+            this.current_index += 1;
             return false;
         }
     }
 
     previous() {
         // Returns the previous char and sets state of this object to belong to that char
+        if (this.current_index == this.text.length) {
+            return this.text[--this.current_index];
+        }
+        
         if (this.current_index > -1) {
             this.current_index -= 1;
             const char = this.text[this.current_index];

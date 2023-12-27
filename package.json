@@ -5,6 +5,7 @@
   "main": "Server/index.js",
   "type": "module",
   "scripts": {
+    "testing": "nodemon --ext js,md ./Compiler/create_AST/index.js",
     "build": "node ./Compiler/build.js",
     "build:watch": "nodemon ./Compiler/build.js",
     "server": "node ./Server/index.js",

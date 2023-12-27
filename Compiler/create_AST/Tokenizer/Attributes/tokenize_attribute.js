@@ -93,7 +93,7 @@ function tokenize_attr_value(text_walker){
     for (let char of text_walker){
         if (char == "]") break;
         if (["\n", "["].includes(char)){
-            text_walker.throw_error_at_current(`Expected attribute value`);
+            text_walker.throw_error_at_current(`Attribute value not valid`);
         }
         if (char == "+"){
             parsed_string += " ";
