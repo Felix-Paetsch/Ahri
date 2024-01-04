@@ -1,5 +1,6 @@
 import { assert } from '../../debug/main.js';
 import tokenize_end_line_whitespace from '../Common/tokenize_end_line_whitespace.js';
+import compile_plain_text from "../Sub_Tokenizer/plain_text.js"
 
 export default function tokenize_list_item(text_walker){
     const item_type = text_walker.current();
@@ -20,10 +21,9 @@ export default function tokenize_list_item(text_walker){
 
     return [{
         "type": "LIST_ITEM",
-        "value": text,
+        "value": compile_plain_text(text),
         "list_type": item_type,
         "original_value": item_type + " " + text,
-        "tokens": [],
         "position": start_pos
     }, ...tokenize_end_line_whitespace(text_walker)];
 }
