@@ -72,7 +72,7 @@ export default (tokens, text_walker) => {
         } else if (char == "$" && text_walker.look_ahead() === "$"){
             tokens.push(...tokenize_multiline_math(text_walker));
         } else {
-            break;
+            tokens.push(...tokenize_plain_text(text_walker));
         }
     }
 

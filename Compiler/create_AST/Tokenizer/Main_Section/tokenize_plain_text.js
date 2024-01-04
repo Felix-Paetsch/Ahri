@@ -1,4 +1,5 @@
-import { assert } from '../../debug/main.js'
+import { assert } from '../../debug/main.js';
+import parse_plain_text from "../../Sub_Parser/plain_text.js";
 
 export default function tokenize_plain_text(text_walker){
     assert(!["\n", " "].includes(text_walker.current()));
@@ -18,7 +19,7 @@ export default function tokenize_plain_text(text_walker){
 
     return [{
         "type": "TEXT_SECTION",
-        "value": text,
+        "value": parse_plain_text(text),
         "original_value": text,
         "tokens": [],
         "position": start_pos

@@ -1,6 +1,6 @@
 import { assert } from '../../debug/main.js';
 import tokenize_end_line_whitespace from '../Common/tokenize_end_line_whitespace.js';
-import compile_plain_text from "../Sub_Tokenizer/plain_text.js"
+import compile_plain_text from "../../Sub_Parser/plain_text.js"
 
 export default function tokenize_list_item(text_walker){
     const item_type = text_walker.current();
