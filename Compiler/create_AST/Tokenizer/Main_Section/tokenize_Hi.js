@@ -1,6 +1,8 @@
-// Current char is the first # char
+import { assert } from '../../debug/main.js'
 
 export default function tokenize_Hi(text_walker){
+    assert(text_walker.current() == "#");
+
     const start_position = text_walker.get_current_text_pos();
 
     let original_value = text_walker.current();
@@ -11,13 +13,9 @@ export default function tokenize_Hi(text_walker){
     }
 
     const amt = original_value.length;
-    if (amt > 6){
-        text_walker.throw_error_at("To many hashtags, use between 1 and 6", start_position);
-    }
 
-    if (text_walker.current() !== " "){
-        text_walker.throw_error_at_current('Expected " "');
-    }
+    text_walker.assert(amt < 6, "To many hashtags, use between 1 and 6");
+    text_walker.assert(text_walker.current() == " ", 'Expected " "');
 
     original_value += " ";
 
@@ -41,9 +39,7 @@ export default function tokenize_Hi(text_walker){
     }
 
     value = value.trim();
-    if (value.length == 0){
-        text_walker.throw_error_at_current("Heading is empty")
-    }
+    text_walker.assert(value.length > 0, "Heading is empty")
     
     return [{
         "type": "HEADING",

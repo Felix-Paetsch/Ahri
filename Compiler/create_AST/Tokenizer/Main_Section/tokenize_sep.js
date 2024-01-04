@@ -1,6 +1,8 @@
-// Current char is the first "=" char
+import { assert } from '../../debug/main.js'
 
 export default function tokenize_sep(text_walker){
+    assert(text_walker.current() == "=");
+
     const start_position = text_walker.get_current_text_pos();
     let sep = text_walker.current();
 

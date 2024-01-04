@@ -1,6 +1,8 @@
-// Current char is the first ">" char
+import { assert } from '../../debug/main.js'
 
-export default function tokenize_whitespace(text_walker){
+export default function tokenize_tag_start(text_walker){
+    assert(text_walker.current() == ">");
+
     const ret = [
         parse_tag_start(text_walker),
         ...tokenize_tag_whitespace(text_walker, 1),
@@ -22,6 +24,13 @@ export default function tokenize_whitespace(text_walker){
         ret.push(...string_attr_tokens); 
         // Current char is false, "\n" or "-"
     }
+
+    ret.push({
+        type: "TAG_START_END_FLAG",
+        value: "",
+        original_value: "",
+        position: text_walker.get_current_text_pos()
+    });
     
     return ret;
 }
@@ -49,15 +58,16 @@ function parse_tag_attr(text_walker){
     text_walker.next();
     ret.push(tokenize_tag_attr_string(text_walker));
 
-    if (text_walker.current() === ":"){
-        return text_walker.throw_error_at_current('Expected whitespace " "');
-    }
+    text_walker.assert(text_walker.current() !== ":", 'Expected ttribute value');
 
     return ret;
 }
 
 function tokenize_tag_attr_string(text_walker){
-    // Current char is first of tag_attr_name (we know its not \n, " " or false)
+    // Current char is first of tag_attr_str
+    assert(!["\n", " ", false].includes(text_walker.current()));
+    text_walker.assert(text_walker.current() !== ":", 'Unexpected ":"');
+    
     let parsed_string = "";
     let src_string    = "";
     
@@ -83,12 +93,7 @@ function tokenize_tag_attr_string(text_walker){
         src_string += char;
     }
 
-    if (parsed_string.length == 0){
-        // i.e. the string starts directly with ":"
-        text_walker.throw_error_at_current(`Expected attribute name`);
-    }
-    
-    // We check above that attribute actually ends with "]"
+    text_walker.assert(parsed_string.length > 0, `Expected attribute name`);
 
     return {
         "type": "TAG_ATTR_STRING",
@@ -103,8 +108,6 @@ function parse_string_attr(text_walker){
     if ([false, "\n"].includes(text_walker.current())){
         return [];
     }
-
-
 
     return [
         tokenize_string_attr_sep(text_walker),
@@ -131,7 +134,7 @@ function tokenize_string_attr_value(text_walker){
     text_walker.previous();
 
     for (let char of text_walker){
-        if (["-", "\n"].includes(char)) break;
+        if (["\n"].includes(char)) break;
         if ("\\" == char && ["\\", "-"].includes(text_walker.look_ahead())){
             const next_char = text_walker.next();
             parsed_string  += next_char;
@@ -148,7 +151,7 @@ function tokenize_string_attr_value(text_walker){
 
     return {
         "type": "TAG_STRING_ATTR_VALUE",
-        "value": parsed_string,
+        "value": parsed_string.trim(),
         "original_value": src_string,
         "position": start_position
     }
@@ -168,9 +171,7 @@ function tokenize_string_attr_sep(text_walker){
         }
     }
 
-    if (val.length == 0){
-        text_walker.throw_error_at_current('Expected "-"');
-    }
+    text_walker.assert(val.length > 0, 'Expected "-"');
 
     return [{
         "type": "TAG_STRING_ATTR_SEP",
@@ -194,16 +195,14 @@ function parse_tag_name(text_walker){
         }
     }
 
-    if (val.length == 0){
-        // So the next chat after '>> ' is not in the regex and not " " 
-        if (text_walker.current() === false || ["\n", "-", "\\"].includes(text_walker.current())){
-            text_walker.throw_error_at_current("Expected tagname");
-        } else {
-            text_walker.throw_error_at_current("Tagname may fit the regex /[a-zA-Z_][a-zA-Z_0-9\-]*/");
-        }
-    } else if (/[0-9\-]/.test(val[0]) || ![false, " ", "\n"].includes(text_walker.current())){
-        text_walker.throw_error_at("Tagname may fit the regex /[a-zA-Z_][a-zA-Z_0-9\-]*/", start_position)
-    }
+    text_walker.assert(
+        val.length > 0 ||  (text_walker.current() !== false && !["\n", "-", "\\"].includes(text_walker.current())),
+        "Expected tagname"
+    );
+
+    text_walker.assert(val.length > 0, "Tagname may fit the regex /[a-zA-Z_][a-zA-Z_0-9\-]*/");
+    text_walker.assert(!/[0-9\-]/.test(val[0]), "Tagname may fit the regex /[a-zA-Z_][a-zA-Z_0-9\-]*/", start_position)
+    text_walker.assert([false, " ", "\n"].includes(text_walker.current()), "Tagname may fit the regex /[a-zA-Z_][a-zA-Z_0-9\-]*/", start_position)
 
     return {
         "type": "TAG_NAME",
@@ -215,7 +214,7 @@ function parse_tag_name(text_walker){
 }
 
 function parse_tag_start(text_walker){
-    // Current char is first ">"
+    assert(text_walker.current() == ">");
     const start_position = text_walker.get_current_text_pos();
     let val = text_walker.current();
 
@@ -258,9 +257,7 @@ function tokenize_tag_whitespace(text_walker, min_amt = 1){
         }
     }
 
-    if (val.length < min_amt){
-        text_walker.throw_error_at_current('Expected " "');
-    }
+    text_walker.assert(val.length >= min_amt, 'Expected " "');
 
     if (text_walker.look_ahead() === false){
         text_walker.next();

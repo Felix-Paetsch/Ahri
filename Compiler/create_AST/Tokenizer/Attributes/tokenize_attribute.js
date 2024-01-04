@@ -1,6 +1,9 @@
-// Current char is "["
+import { assert } from '../../debug/main.js'
+import tokenize_end_line_whitespace from '../Common/tokenize_end_line_whitespace.js';
 
 export default function tokenize_attr(text_walker) {
+    assert(text_walker.current() == "[");
+
     const ret = [{
         "type":  "ATTRIBUTE_START",
         "value": "[",
@@ -9,6 +12,7 @@ export default function tokenize_attr(text_walker) {
     }];
 
     ret.push(tokenize_attr_name(text_walker));
+
     if (text_walker.current() === ":"){
         ret.push({
             "type":  "ATTRIBUTE_SEP",
@@ -20,22 +24,22 @@ export default function tokenize_attr(text_walker) {
         ret.push(tokenize_attr_value(text_walker));
     }
 
-    if (text_walker.current() !== "]"){
-        text_walker.throw_error_at(`Expected attr end "]"`, text_walker.get_current_text_pos());
-    }
-
+    text_walker.assert(text_walker.current() === "]", `Expected attr end "]"`);
+    text_walker.next();
+    
     ret.push({
         "type":  "ATTRIBUTE_END",
         "value": "]",
         "original_value": "]",
         "position": text_walker.get_current_text_pos()
-    });
+    }, ...tokenize_end_line_whitespace(text_walker));
 
     return ret;
 }
 
 function tokenize_attr_name(text_walker){
-    // Current char is "["
+    assert(text_walker.current() == "[");
+
     let parsed_string = "";
     let src_string    = "";
 
@@ -45,9 +49,9 @@ function tokenize_attr_name(text_walker){
 
     for (let char of text_walker){
         if (["]", ":"].includes(char)) break;
-        if (["\n", "["].includes(char)){
-            text_walker.throw_error_at(`Expected ":" or "]" for attr value or attr end`, text_walker.get_current_text_pos());
-        }
+
+        text_walker.assert(!["\n", "["].includes(char), `Expected ":" or "]" for attr value or attr end`);
+
         if (char == "+"){
             parsed_string += " ";
             src_string += char;
@@ -65,13 +69,8 @@ function tokenize_attr_name(text_walker){
         src_string += char;
     }
 
-    if (src_string.length == 0){
-        text_walker.throw_error_at(`Expected attribute name`, text_walker.get_current_text_pos());
-    }
-
-    if (!["]", ":"].includes(text_walker.current())){
-        text_walker.throw_error_at(`Expected ":" or "]" for attr value or attr end`, text_walker.get_current_text_pos());
-    }
+    text_walker.assert(src_string.length > 0, `Expected attribute name`);
+    text_walker.assert(["]", ":"].includes(text_walker.current()), `Expected ":" or "]" for attr value or attr end`);
 
     return {
         "type": "ATTRIBUTE_NAME",
@@ -82,7 +81,8 @@ function tokenize_attr_name(text_walker){
 }
 
 function tokenize_attr_value(text_walker){
-    // Current char is ":"
+    assert(text_walker.current() == ":");
+
     let parsed_string = "";
     let src_string    = "";
     
@@ -92,9 +92,9 @@ function tokenize_attr_value(text_walker){
 
     for (let char of text_walker){
         if (char == "]") break;
-        if (["\n", "["].includes(char)){
-            text_walker.throw_error_at_current(`Attribute value not valid`);
-        }
+        
+        text_walker.assert(!["\n", "["].includes(char), `Attribute value not valid`);
+        
         if (char == "+"){
             parsed_string += " ";
             src_string += char;
@@ -112,11 +112,7 @@ function tokenize_attr_value(text_walker){
         src_string += char;
     }
 
-    if (src_string.length == 0){
-        text_walker.throw_error_at_current(`Expected attribute value`);
-    }
-    
-    // We check above that attribute actually ends with "]"
+    text_walker.assert(src_string.length > 0, `Expected attribute value`);
 
     return {
         "type": "ATTRIBUTE_VALUE",

@@ -120,6 +120,12 @@ export default class TextWalker {
         ]
     }
 
+    assert(b, msg, pos = false){
+        if (b) return;
+        if (pos === false) this.throw_error_at_current(msg);
+        this.throw_error_at(msg, pos);
+    }
+
     throw_error_at_current(msg){
         this.throw_error_at(msg, this.get_current_text_pos());
     }

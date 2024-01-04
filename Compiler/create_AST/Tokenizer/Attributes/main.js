@@ -11,7 +11,7 @@ export default (tokens, text_walker) => {
             break;    
         } else if (char == "["){
             tokens.push(...tokenize_attr(text_walker));
-            // Text walker is on the "]"
+            // Text walker is before "\n" or false
         } else if (char == "/" && text_walker.look_ahead() == "/"){
             tokens.push(...tokenize_single_line_comment(text_walker));
             // Text walker is on char before "\n" or EOF (those are not parsed)
