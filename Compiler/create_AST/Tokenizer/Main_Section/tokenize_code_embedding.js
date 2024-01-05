@@ -41,7 +41,6 @@ export default function tokenize_code_embedding(text_walker){
         "type": "CODE_EMBEDDING",
         "value": val,
         "original_value": original_val,
-        "tokens": [],
         "position": start_pos,
         language,
         dependencies,

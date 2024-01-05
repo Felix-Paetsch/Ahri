@@ -76,6 +76,13 @@ export default (tokens, text_walker) => {
         }
     }
 
+    tokens.push({
+        "type": "EOF",
+        "value": "",
+        "original_value": "",
+        "position": text_walker.get_current_text_pos()
+    });
+
     return tokens;
 }
 

@@ -186,5 +186,6 @@ function sanitizeHtml(str) {
 
 function sanatizeLink(str){
     return str.replace(/\n/g, ' ')
+              .replace(/\//g, '&#47;')
               .replace(/"/g, '&quot;');
 }

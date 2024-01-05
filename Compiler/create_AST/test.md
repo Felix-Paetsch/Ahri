@@ -1,5 +1,6 @@
-[\[param_name:param_value]
-[a:b]
+[param_name]
+[a:b] [abc]
+[a:\ ]
 
 ```js hello
 Hello you

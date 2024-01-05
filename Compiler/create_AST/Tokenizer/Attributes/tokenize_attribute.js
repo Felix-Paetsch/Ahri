@@ -1,5 +1,6 @@
 import { assert } from '../../debug/main.js'
-import tokenize_end_line_whitespace from '../Common/tokenize_end_line_whitespace.js';
+// import tokenize_end_line_whitespace from '../Common/tokenize_end_line_whitespace.js';
+import tokenize_whitespace from './tokenize_whitespace.js';
 
 export default function tokenize_attr(text_walker) {
     assert(text_walker.current() == "[");
@@ -32,7 +33,7 @@ export default function tokenize_attr(text_walker) {
         "value": "]",
         "original_value": "]",
         "position": text_walker.get_current_text_pos()
-    }, ...tokenize_end_line_whitespace(text_walker));
+    }, ...tokenize_whitespace(text_walker)); //  ...tokenize_end_line_whitespace(text_walker));
 
     return ret;
 }
@@ -101,7 +102,7 @@ function tokenize_attr_value(text_walker){
             continue;
         }
         if ("\\" == char){
-            if (["]", "\\", "[", "+"].includes(text_walker.look_ahead())){
+            if (["]", "\\", "[", "+", " "].includes(text_walker.look_ahead())){
                 const next_char = text_walker.next();
                 parsed_string  += next_char;
                 src_string     += "\\" + next_char;

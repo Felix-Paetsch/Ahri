@@ -21,8 +21,8 @@ export default function tokenize_tag_start(text_walker){
     while (true){
         const string_attr_tokens = parse_string_attr(text_walker);
         if (string_attr_tokens.length == 0) break;
-        ret.push(...string_attr_tokens); 
-        // Current char is false, "\n" or "-"
+        ret.push(...string_attr_tokens);
+        assert([false, "\n", "-"].includes(text_walker.current()))
     }
 
     ret.push({
@@ -208,8 +208,7 @@ function parse_tag_name(text_walker){
         "type": "TAG_NAME",
         "value": val,
         original_value: val,
-        position: start_position,
-        amt: val.length
+        position: start_position
     }
 }
 
