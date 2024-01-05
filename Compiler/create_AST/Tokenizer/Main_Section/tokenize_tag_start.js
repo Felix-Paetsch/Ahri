@@ -1,9 +1,10 @@
 import { assert } from '../../debug/main.js'
+import parse_code_embedding from "../../Sub_Parser/tag_start.js";
 
 export default function tokenize_tag_start(text_walker){
     assert(text_walker.current() == ">");
 
-    const ret = [
+    const tag_tokens = [
         parse_tag_start(text_walker),
         ...tokenize_tag_whitespace(text_walker, 1),
         parse_tag_name(text_walker),
@@ -14,25 +15,44 @@ export default function tokenize_tag_start(text_walker){
         // Current char is first char of tag attr / string_attr / char after end of tag
         const tag_attr_tokens = parse_tag_attr(text_walker);
         if (tag_attr_tokens.length == 0) break;
-        ret.push(...tag_attr_tokens);
-        ret.push(...white_space_or_expect_new_line(text_walker));
+        tag_tokens.push(...tag_attr_tokens);
+        tag_tokens.push(...white_space_or_expect_new_line(text_walker));
     }
 
     while (true){
         const string_attr_tokens = parse_string_attr(text_walker);
         if (string_attr_tokens.length == 0) break;
-        ret.push(...string_attr_tokens);
+        tag_tokens.push(...string_attr_tokens);
         assert([false, "\n", "-"].includes(text_walker.current()))
     }
 
-    ret.push({
+    tag_tokens.push({
         type: "TAG_START_END_FLAG",
         value: "",
         original_value: "",
         position: text_walker.get_current_text_pos()
+    })
+
+    tag_tokens.forEach(t => t.throw = (msg) => {
+        text_walker.throw_error_at(msg, t.position);
     });
     
-    return ret;
+    const {
+        amt,
+        tag_name,
+        attributes,
+        string_attributes
+    } = parse_code_embedding(tag_tokens);
+
+    return [{
+        type: "TAG_START",
+        amt,
+        tag_name,
+        attributes,
+        string_attributes,
+        original_value: tag_tokens.map(t => t.original_value).join(""),
+        tokens: tag_tokens
+    }];
 }
 
 function parse_tag_attr(text_walker){
@@ -58,14 +78,14 @@ function parse_tag_attr(text_walker){
     text_walker.next();
     ret.push(tokenize_tag_attr_string(text_walker));
 
-    text_walker.assert(text_walker.current() !== ":", 'Expected ttribute value');
+    text_walker.assert(text_walker.current() !== ":", 'Expected atribute value');
 
     return ret;
 }
 
 function tokenize_tag_attr_string(text_walker){
     // Current char is first of tag_attr_str
-    assert(!["\n", " ", false].includes(text_walker.current()));
+    text_walker.assert(!["\n", " ", false].includes(text_walker.current()), "Expected attribute value");
     text_walker.assert(text_walker.current() !== ":", 'Unexpected ":"');
     
     let parsed_string = "";
@@ -173,12 +193,12 @@ function tokenize_string_attr_sep(text_walker){
 
     text_walker.assert(val.length > 0, 'Expected "-"');
 
-    return [{
+    return {
         "type": "TAG_STRING_ATTR_SEP",
         "value": val,
         "original_value": val,
         position: start_position
-    }]
+    }
 }
 
 function parse_tag_name(text_walker){

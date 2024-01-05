@@ -1,3 +1,5 @@
+import { assert } from '../../debug/main.js'
+
 import tokenize_spaces from './tokenize_spaces.js';
 import tokenize_single_line_comment from '../Common/tokenize_single_line_comment.js';
 import tokenize_multi_line_comment from '../Common/tokenize_multi_line_comment.js';
@@ -52,7 +54,6 @@ export default (tokens, text_walker) => {
             && text_walker.look_ahead(2) == "="
         ){
             tokens.push(...tokenize_sep(text_walker));
-            assert(text_walker.current() == "=");
         } else if ((char == "-" || char == "*") && text_walker.look_ahead() === " "){
             tokens.push(...tokenize_list_item(text_walker));
         } else if (char == "\\" && [">", "<", "=", "#", "*", "-", "\\", "/"].includes(text_walker.look_ahead())){

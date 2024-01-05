@@ -38,6 +38,8 @@ export default function tokenize_sep(text_walker){
         }
     }
 
+    text_walker.previous();
+
     ret.push({
         "type": "SECTION_SEPERATOR_COMMENT",
         "value": "",
