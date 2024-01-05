@@ -12,7 +12,7 @@ const main = (fp) => {
     const tokens = tokenize(fileContents);
     const { attributes, body } = parse(tokens);
     // console.log(attributes);
-    console.log(tokens);
+    // console.log(tokens);
 };
 
 const filePath = path.resolve(__dirname, "./test.md");

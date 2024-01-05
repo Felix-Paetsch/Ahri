@@ -29,6 +29,11 @@ export default class TokenWalker {
         };
     }
 
+    remove_previous_tokens(){
+        this.tokens = this.tokens.slice(this.current_index);
+        this.current_index = -1;
+    }
+
     next(){
         // Returns the next char and sets state of this object to belong to that char
         if (this.current_index < this.tokens.length - 1) {
@@ -42,7 +47,7 @@ export default class TokenWalker {
 
     previous() {
         // Returns the previous char and sets state of this object to belong to that char
-        if (this.current_index == this.tokens.length) {
+        if (this.current_index > 0) {
             return this.tokens[--this.current_index];
         }
         

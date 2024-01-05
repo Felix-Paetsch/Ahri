@@ -145,6 +145,11 @@ Here are the tokens of the main section:
         "position": start_pos,
         throw: (msg) => {}
     },{
+        "type": "SECTION_SEPERATOR",
+        "value": "",
+        "original_value": sep,
+        "position": start_position
+    },{
         "type": "SECTION_SEPERATOR_COMMENT",
         "value": "",
         "original_value": sep_comment,
@@ -175,48 +180,6 @@ Here are the tokens of the main section:
         original_value: val,
         position: start_position,
         amt: val.length,
-        throw: (msg) => {}
-    },{
-        "type": "TAG_NAME",
-        "value": val,
-        original_value: val,
-        position: start_position,
-        throw: (msg) => {}
-    },{
-        "type": "TAG_WHITESPACE",
-        "value": val,
-        "original_value": val,
-        position: start_position,
-        throw: (msg) => {}
-    },{
-        "type": "TAG_ATTR_STRING",
-        "value": parsed_string,
-        "original_value": src_string,
-        "position": start_position,
-        throw: (msg) => {}
-    },{
-        "type": "TAG_ATTR_SEP",
-        "value": ":",
-        "original_value": ":",
-        position: text_walker.get_current_text_pos(),
-        throw: (msg) => {}
-    },{
-        "type": "TAG_STRING_ATTR_SEP",
-        "value": val,
-        "original_value": val,
-        position: start_position,
-        throw: (msg) => {}
-    },{
-        "type": "TAG_STRING_ATTR_VALUE",
-        value: "",
-        original_value: "",
-        position: text_walker.get_current_text_pos(),
-        throw: (msg) => {}
-    },{
-        type: "TAG_START_END_FLAG",
-        value: "",
-        original_value: "",
-        position: text_walker.get_current_text_pos(),
         throw: (msg) => {}
     },{
         type: "END_LINE_WHITESPACE",

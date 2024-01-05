@@ -1,4 +1,3 @@
-import { text } from 'express';
 import { assert, invalid_path } from '../../debug/main.js';
 
 export default function parse_attributes(token_walker){
@@ -29,6 +28,7 @@ export default function parse_attributes(token_walker){
         invalid_path();
     }
 
+    token_walker.next();
     return attributes;
 }
 
