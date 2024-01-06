@@ -9,8 +9,8 @@ export default function replace_h1_to_h6_with_tags(token_walker){
                     "type": "TAG_START",
                     amt: 1,
                     tag_name: "H" + token.amt,
-                    attributes: {},
-                    string_attributes: {},
+                    attributes: [],
+                    string_attributes: [],
                     original_value: "",
                     tokens: [],
                     position: token.position,
@@ -27,7 +27,6 @@ export default function replace_h1_to_h6_with_tags(token_walker){
                     "type": "TEXT_SECTION",
                     "value": token.value,
                     "original_value": token.original_value,
-                    "tokens": [],
                     "position": token.position,
                     throw: token.throw,
                     preprocessing: true

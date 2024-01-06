@@ -134,14 +134,12 @@ Here are the tokens of the main section:
         "type": "MULTILINE_MATH",
         "value": val,
         "original_value": original_val,
-        "tokens": [],
         "position": start_pos,
         throw: (msg) => {}
     },{
         "type": "TEXT_SECTION",
-        "value": parse_plain_text(text),
+        "value": compile_plain_text(text),
         "original_value": text,
-        "tokens": [],
         "position": start_pos,
         throw: (msg) => {}
     },{
@@ -175,12 +173,14 @@ Here are the tokens of the main section:
         "position": tag_end_comment_start_position,
         throw: (msg) => {}
     },{
-        "type": "TAG_START",
-        "value": val,
-        original_value: val,
-        position: start_position,
-        amt: val.length,
-        throw: (msg) => {}
+        type: "TAG_START",
+        amt,
+        tag_name,
+        attributes,
+        string_attributes,
+        original_value: tag_tokens.map(t => t.original_value).join(""),
+        tokens: tag_tokens,
+        position
     },{
         type: "END_LINE_WHITESPACE",
         value: whitespace_val,

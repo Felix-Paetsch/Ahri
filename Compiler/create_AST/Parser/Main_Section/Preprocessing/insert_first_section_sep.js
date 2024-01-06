@@ -8,7 +8,8 @@ export default function insert_first_section_sep(token_walker){
             value: "",
             original_value: "",
             position: token_walker.look_ahead().position,
-            throw: token_walker.look_ahead().throw
+            throw: token_walker.look_ahead().throw,
+            preprocessing: true
         });
     }
 }
