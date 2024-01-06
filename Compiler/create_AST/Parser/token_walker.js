@@ -51,6 +51,11 @@ export default class TokenWalker {
         this.current_index --;
     }
 
+    delete_next_token(){
+        this.tokens.splice(this.current_index + 1, 1);
+        this.current_index;
+    }
+
     insert_token_after_current(token){
         if (token instanceof Array){
             return this.tokens.splice(this.current_index + 1, 0, ...token);

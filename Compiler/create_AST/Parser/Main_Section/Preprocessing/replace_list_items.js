@@ -178,14 +178,20 @@ function create_list(tw, current_index_amt){
 
     assert(tw.look_back().type == "TAG_END");
 
-    tw.insert_token_before_current({
-        "type": "TAG_END",
-        "value": "",
-        "original_value": "",
-        "position": tw.look_back().position,
-        amt: current_index_amt + 1,
-        throw: tw.look_back().throw,
-        preprocessing: true
-    });
-    console.log(tw.get_tokens());
+    tw.insert_token_before_current([{
+            type: "NEW_LINE",
+            value: "",
+            original_value: "",
+            position: tw.look_back().position,
+            throw: tw.look_back().throw,
+            preprocessing: true
+        },{
+            "type": "TAG_END",
+            "value": "",
+            "original_value": "",
+            "position": tw.look_back().position,
+            amt: current_index_amt + 1,
+            throw: tw.look_back().throw,
+            preprocessing: true
+    }]);
 }

@@ -1,9 +1,10 @@
 export default class TextWalker {
-    constructor(text){
+    constructor(text, fp = ""){
         if (text.length === 0){
             throw new Error("Internal: Expecting text to have length > 0");
         }
 
+        this.fp = fp;
         this.text = text.replace(/\r/g, "");;
         this.reset_counts();
     }
@@ -129,14 +130,46 @@ export default class TextWalker {
     throw_error_at_current(msg){
         this.throw_error_at(msg, this.get_current_text_pos());
     }
-
-    throw_error_at(msg, line, col){
-        if (Array.isArray(line)){
+    throw_error_at(msg, line, col) {
+        if (Array.isArray(line)) {
             col  = line[1];
             line = line[0];
         }
-        console.log("There is an error:")
-        console.log(`Line: ${ line + 1 }, Col: ${ col + 1 }`);
-        throw new Error(msg);
+    
+        let errorSnippet = this._getErrorSnippet(line, col);
+        console.log("There was an error during compiling:");
+        console.log("");
+        if (this.fp !== ""){
+            console.log(`File: ${ this.fp }`)
+        }
+        console.log(`Line: ${line + 1}, Col: ${col + 1}`);
+        console.log("=====================")
+        console.error(`${errorSnippet}`);
+        console.log(" ", msg);
+        
+        console.log("\n---- end of error msg ----");
+        throw new Error(`Error at Line ${line + 1}, Col ${col + 1}: ${msg}`);
     }
+    
+    _getErrorSnippet(line, col) {
+        const lines = this.text.split("\n");
+        let snippet = "";
+
+        for (let i = 2; i >= 0; i--){
+            if (line - i < 0) continue;
+            snippet += (line - i + 1).toString().padEnd(3, ' ') + "| ";
+            snippet += lines[line - i] + "\n";
+        }
+
+        snippet += "    ";
+
+        // Adding a pointer to the error position
+        for (let i = 0; i < col; i++) {
+            snippet += " ";
+        }
+        snippet += "^";
+    
+        return snippet;
+    }
+    
 }

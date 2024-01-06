@@ -9,6 +9,15 @@ export default function remove_comments(token_walker){
             "MUTLILINE_COMMENT"
         ].includes(token.type)) {
             token_walker.delete_current_token();
+            continue;
+        }
+
+        if (token.type == "WHITESPACE"){
+            if (["SECTION_SEPERATOR", "HEADING"].includes(token_walker.look_ahead().type)){
+                token_walker.look_ahead().throw(`Spaces before headings or section seperators are not allowed.`);
+            }
+
+            token_walker.delete_current_token();
         }
         
         if (token.type == "MUTLILINE_COMMENT"){
