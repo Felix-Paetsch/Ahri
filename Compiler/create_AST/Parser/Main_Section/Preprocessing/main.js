@@ -1,14 +1,11 @@
-/*
-    Edit the tokens (inside the token_walker) to ease later processing. The following things are done:
-
-    If no SECTION_SEPERATOR token is at the beginning, than add one
-    Replace all H1-H6  with the corresponding Tags
-    Replace List Items with the corresponding Tags (making sure the things inside them stay inside, given "\")
-    Add List opening and closing around list items
-*/
-
-import { assert } from '../../../debug/main.js';
+import insert_first_section_sep from "./insert_first_section_sep.js";
+import replace_h1_to_h6_with_tags from "./replace_h1_to_h6_with_tags.js";
+import replace_list_items from "./replace_list_items.js";
 
 export default function pre_process_tokens(token_walker){
+    insert_first_section_sep(token_walker);
+    replace_h1_to_h6_with_tags(token_walker);
+    replace_list_items(token_walker);
+    console.log(token_walker.get_tokens());
     return [];
 }

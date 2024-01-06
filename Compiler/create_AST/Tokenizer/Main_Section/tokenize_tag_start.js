@@ -3,6 +3,7 @@ import parse_code_embedding from "../../Sub_Parser/tag_start.js";
 
 export default function tokenize_tag_start(text_walker){
     assert(text_walker.current() == ">");
+    const position = text_walker.get_current_text_pos();
 
     const tag_tokens = [
         parse_tag_start(text_walker),
@@ -44,6 +45,10 @@ export default function tokenize_tag_start(text_walker){
         string_attributes
     } = parse_code_embedding(tag_tokens);
 
+    if (text_walker.current() == "\n"){
+        text_walker.previous();
+    }
+
     return [{
         type: "TAG_START",
         amt,
@@ -51,7 +56,8 @@ export default function tokenize_tag_start(text_walker){
         attributes,
         string_attributes,
         original_value: tag_tokens.map(t => t.original_value).join(""),
-        tokens: tag_tokens
+        tokens: tag_tokens,
+        position
     }];
 }
 

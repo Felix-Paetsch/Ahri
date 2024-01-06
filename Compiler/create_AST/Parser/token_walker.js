@@ -45,6 +45,19 @@ export default class TokenWalker {
         }
     }
 
+    delete_current_token(){
+        // Goes to prev token
+        this.tokens.splice(this.current_index, 1);
+        this.current_index --;
+    }
+
+    insert_token_after_current(token){
+        if (token instanceof Array){
+            return this.tokens.splice(this.current_index + 1, 0, ...token);
+        }
+        this.tokens.splice(this.current_index + 1, 0, token);
+    }
+
     previous() {
         // Returns the previous char and sets state of this object to belong to that char
         if (this.current_index > 0) {

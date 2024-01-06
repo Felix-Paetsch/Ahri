@@ -1,4 +1,5 @@
 import { assert } from '../../debug/main.js'
+import parse_plain_text from "../../Sub_Parser/plain_text.js";
 
 export default function tokenize_Hi(text_walker){
     assert(text_walker.current() == "#");
@@ -19,7 +20,7 @@ export default function tokenize_Hi(text_walker){
 
     original_value += " ";
 
-    for (let char of text_walker.next()){
+    for (let char of text_walker){
         if (char === false) {
             break;
         } else if (char == "/" && text_walker.look_ahead() == "/"){
@@ -43,7 +44,7 @@ export default function tokenize_Hi(text_walker){
     
     return [{
         "type": "HEADING",
-        "value": value,
+        "value": parse_plain_text(value),
         "original_value": original_value,
         "position": start_position,
         amt
