@@ -143,7 +143,7 @@ export default class TextWalker {
             console.log(`File: ${ this.fp }`)
         }
         console.log(`Line: ${line + 1}, Col: ${col + 1}`);
-        console.log("=====================")
+        console.log("==========================")
         console.error(`${errorSnippet}`);
         console.log(" ", msg);
         
@@ -155,13 +155,13 @@ export default class TextWalker {
         const lines = this.text.split("\n");
         let snippet = "";
 
-        for (let i = 2; i >= 0; i--){
+        for (let i = 3; i >= 0; i--){
             if (line - i < 0) continue;
             snippet += (line - i + 1).toString().padEnd(3, ' ') + "| ";
             snippet += lines[line - i] + "\n";
         }
 
-        snippet += "    ";
+        snippet += "     ";
 
         // Adding a pointer to the error position
         for (let i = 0; i < col; i++) {

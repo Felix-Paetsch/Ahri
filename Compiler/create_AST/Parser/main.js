@@ -11,6 +11,7 @@ export default function parse(tokens) {
 
     token_walker.remove_previous_tokens();
     const body = parse_main_section(token_walker);
+
     return {
         attributes,
         body

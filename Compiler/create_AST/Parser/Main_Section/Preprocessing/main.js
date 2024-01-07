@@ -10,6 +10,4 @@ export default function pre_process_tokens(token_walker){
     replace_h1_to_h6_with_tags(token_walker);
     replace_list_items(token_walker);
     remove_new_lines(token_walker);
-    console.log(token_walker.get_tokens());
-    return [];
 }

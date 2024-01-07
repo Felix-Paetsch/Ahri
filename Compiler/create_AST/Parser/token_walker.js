@@ -120,23 +120,13 @@ export default class TokenWalker {
         return t.position;
     }
 
-    assert(b, msg, pos = false){
+    assert(b, msg, token = false){
         if (b) return;
-        if (pos === false) this.throw_error_at_current(msg);
-        this.throw_error_at(msg, pos);
+        if (token === false) this.throw_error_at_current(msg);
+        token.throw(msg)
     }
 
     throw_error_at_current(msg){
-        this.throw_error_at(msg, this.get_current_text_pos());
-    }
-
-    throw_error_at(msg, token){
-        if (Array.isArray(line)){
-            col  = line[1];
-            line = line[0];
-        }
-        console.log("There is an error:")
-        console.log(`Line: ${ line + 1 }, Col: ${ col + 1 }`);
-        throw new Error(msg);
+        this.tokens[this.current_index].throw(msg);
     }
 }
