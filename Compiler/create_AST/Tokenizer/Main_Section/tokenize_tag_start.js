@@ -1,8 +1,9 @@
 import { assert } from '../../debug/main.js'
-import parse_code_embedding from "../../Sub_Parser/tag_start.js";
+import sub_parse_tag from "../../Sub_Parser/tag_start.js";
 
 export default function tokenize_tag_start(text_walker){
-    assert(text_walker.current() == ">");
+    assert(text_walker.current() == ">" || (text_walker.current() == "!" && text_walker.look_ahead() == ">"));
+
     const position = text_walker.get_current_text_pos();
 
     const tag_tokens = [
@@ -42,8 +43,9 @@ export default function tokenize_tag_start(text_walker){
         amt,
         tag_name,
         attributes,
-        string_attributes
-    } = parse_code_embedding(tag_tokens);
+        string_attributes,
+        self_closing
+    } = sub_parse_tag(tag_tokens);
 
     if (text_walker.current() == "\n"){
         text_walker.previous();
@@ -55,6 +57,7 @@ export default function tokenize_tag_start(text_walker){
         tag_name,
         attributes,
         string_attributes,
+        self_closing,
         original_value: tag_tokens.map(t => t.original_value).join(""),
         tokens: tag_tokens,
         position
@@ -239,7 +242,13 @@ function parse_tag_name(text_walker){
 }
 
 function parse_tag_start(text_walker){
-    assert(text_walker.current() == ">");
+    assert(text_walker.current() == ">" || (text_walker.current() == "!" && text_walker.look_ahead() == ">"));
+
+    const self_closing_tag = text_walker.current() == "!"
+    if (self_closing_tag){
+        text_walker.next();
+    }      
+
     const start_position = text_walker.get_current_text_pos();
     let val = text_walker.current();
 
@@ -254,8 +263,9 @@ function parse_tag_start(text_walker){
     return {
         "type": "TAG_START",
         "value": val,
-        original_value: val,
+        original_value: self_closing_tag ? "!" + val : val,
         position: start_position,
+        self_closing: self_closing_tag,
         amt: val.length
     }
 }

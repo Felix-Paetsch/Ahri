@@ -6,6 +6,7 @@ export default (tag_tokens) => {
     
     assert(tw.next().type == "TAG_START");
     const amt = tw.current().amt;
+    const self_closing = tw.current().self_closing;
     
     assert(tw.next().type == "TAG_WHITESPACE");
     assert(tw.next().type == "TAG_NAME");
@@ -68,6 +69,7 @@ export default (tag_tokens) => {
             throw: tag_name_token.throw
         },
         attributes,
+        self_closing,
         string_attributes
     }
 }

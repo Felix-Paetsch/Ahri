@@ -25,7 +25,7 @@ export default (tokens, text_walker) => {
     for (let char of text_walker){
         // Prev we have FALSE or "\n           "
         
-        if (char == ">"){
+        if (char == ">" || (char == "!" && text_walker.look_ahead() == ">")){
             tokens.push(...tokenize_tag_start(text_walker));
         } else if (char == "<"){
             tokens.push(...tokenize_tag_end(text_walker));
@@ -56,7 +56,7 @@ export default (tokens, text_walker) => {
             tokens.push(...tokenize_sep(text_walker));
         } else if ((char == "-" || char == "*") && text_walker.look_ahead() === " "){
             tokens.push(...tokenize_list_item(text_walker));
-        } else if (char == "\\" && [">", "<", "=", "#", "*", "-", "\\", "/"].includes(text_walker.look_ahead())){
+        } else if (char == "\\" && [">", "<", "=", "#", "*", "-", "\\", "/", "!"].includes(text_walker.look_ahead())){
             tokens.push({
                 type: "TRANSITION_TEXT",
                 value: "",

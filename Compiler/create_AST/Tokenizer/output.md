@@ -180,7 +180,8 @@ Here are the tokens of the main section:
         string_attributes,
         original_value: tag_tokens.map(t => t.original_value).join(""),
         tokens: tag_tokens,
-        position
+        position,
+        self_closing
     },{
         type: "END_LINE_WHITESPACE",
         value: whitespace_val,

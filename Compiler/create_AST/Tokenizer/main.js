@@ -3,7 +3,7 @@ import tokenize_attribute_section from "./Attributes/main.js";
 import tokenize_main_section from "./Main_Section/main.js";
 
 
-export default function tokenize(text) {
+export default function tokenize(text, src_path = "") {
     if (text.length === 0) return [{
         type: "END_OF_ATTR_SECTION",
         value: "",
@@ -17,7 +17,7 @@ export default function tokenize(text) {
     }];
 
     const tokens = [];
-    const text_walker = new TextWalker(text);
+    const text_walker = new TextWalker(text, src_path);
 
     tokenize_attribute_section(tokens, text_walker);
     // Current char is the last attribute char
