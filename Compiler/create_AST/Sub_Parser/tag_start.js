@@ -64,10 +64,8 @@ export default (tag_tokens) => {
 
     return {
         amt,
-        tag_name: {
-            value: tag_name_token.value,
-            throw: tag_name_token.throw
-        },
+        tag_name: tag_name_token.value,
+        throw_name: tag_name_token.throw,
         attributes,
         self_closing,
         string_attributes

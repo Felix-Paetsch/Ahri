@@ -71,7 +71,6 @@ function create_list(tw, current_index_amt){
         attributes: [],
         string_attributes: [],
         amt: current_index_amt + 1,
-        original_value: "",
         position: tw.current().position,
         throw: tw.current().throw,
         preprocessing: true

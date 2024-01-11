@@ -16,6 +16,7 @@ It will look like this:
     }],
     body: [{
         type: "SECTION",
+        tag_name: "SECTION",
         throw: section_start_token.throw,
         children: [{
             type: "TAG",

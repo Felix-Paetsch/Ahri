@@ -33,6 +33,7 @@ function section_AST(section){
 
     return {
         type: "SECTION",
+        tag_name: "SECTION",
         throw: section_start_token.throw,
         children: AST_with_indent(tw, 0)
     };
