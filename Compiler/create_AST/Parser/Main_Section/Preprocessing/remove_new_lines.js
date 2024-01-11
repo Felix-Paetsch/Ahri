@@ -61,8 +61,8 @@ export default function remove_new_lines(token_walker){
                         tag_name: "TEXT_PARAGRAPH",
                         attributes: [{
                             name: "text_type",
-                            value: text_token.type == "MULTILINE_MATH" ? "plain_text" : "multiline_math",
-                            type: "value",
+                            value: text_token.type == "MULTILINE_MATH" ? "PLAIN_TEXT" : "MULTILINE_MATH",
+                            type: "VALUE",
                             throw: text_token.throw
                         }],
                         string_attributes: [text_token.value],

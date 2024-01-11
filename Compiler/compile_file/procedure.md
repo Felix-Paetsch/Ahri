@@ -14,3 +14,5 @@ Create rendering obj
 - util function
 
 Render
+
+The import attributes in in test.md i.e. import css or js

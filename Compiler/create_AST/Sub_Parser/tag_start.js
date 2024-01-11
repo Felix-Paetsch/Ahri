@@ -28,7 +28,7 @@ export default (tag_tokens) => {
             attributes.push({
                 name: attr_string_token.value,
                 value: attr_value_token.value,
-                type: "value",
+                type: "VALUE",
                 throw: attr_string_token.throw,
                 value_throw: attr_value_token.throw
             });
@@ -36,7 +36,7 @@ export default (tag_tokens) => {
             attributes.push({
                 name: attr_string_token.value,
                 value: true,
-                type: "boolean",
+                type: "BOOLEAN",
                 throw: attr_string_token.throw
             });
         }

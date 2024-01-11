@@ -7,7 +7,7 @@ import {
 
 export default function update_component_template_json(CONF, folder){
     CONF.assert(typeof CONF.tag_name == "string", "Invalid tag name");
-    CONF.tag_name = CONF.tag_name.toLowerCase();
+    CONF.tag_name = CONF.tag_name.toUpperCase();
 
     create_ejs_entry(CONF, folder);
     create_descr(CONF, folder);
@@ -34,12 +34,12 @@ export default function update_component_template_json(CONF, folder){
         }
 
         if (typeof a.options !== "undefined"){
-            a.type = "enum";
+            a.type = "ENUM";
             a.options = a.options.map(v => v.toUpperCase());
         }
 
         if (typeof a.type == "undefined"){
-            a.type == "boolean"
+            a.type == "BOOLEAN"
         }
 
         a.name = a.name.toUpperCase();

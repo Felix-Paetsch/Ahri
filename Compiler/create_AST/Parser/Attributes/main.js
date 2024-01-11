@@ -57,7 +57,7 @@ function parse_attribute(token_walker){
     return {
         name: attr_name.value,
         value: attr_value.value,
-        type: "value",
+        type: "VALUE",
         throw: attr_name.throw
     }
 }

@@ -1,5 +1,5 @@
 export default function clean_tag(tag, resources){
-    const tag_arr = resources.tags.filter(t => t.tag_name.toLowerCase() == tag.tag_name.toLowerCase());
+    const tag_arr = resources.tags.filter(t => t.tag_name.toUpperCase() == tag.tag_name.toUpperCase());
 
     if (tag_arr.length == 0){
         tag.throw(`Tag name '${ tag.tag_name }' doesn't exist`);
@@ -63,32 +63,32 @@ function update_attributes(tag){
         }
 
         // Check that type matches
-        if (conf_attr.type == "boolean"){
+        if (conf_attr.type == "BOOLEAN"){
             const attr = attr_dict[conf_attr.name]
-            if (attr.type !== "boolean"){
-                if (attr.toLowerCase() == "false"){
-                    attr.type = "boolean";
+            if (attr.type !== "BOOLEAN"){
+                if (attr.toUpperCase() == "FALSE"){
+                    attr.type = "BOOLEAN";
                     attr.value = false;
-                } else if (attr.toLowerCase() == "true"){
-                    attr.type = "boolean";
+                } else if (attr.toUpperCase() == "FALSE"){
+                    attr.type = "BOOLEAN";
                     attr.value = true;
                 } else {
                     attr.throw("Expected boolean attribute");
                 }
             }
-        } else if (conf_attr.type == "value"){
+        } else if (conf_attr.type == "VALUE"){
             const attr = attr_dict[conf_attr.name]
-            if (attr.type !== "value"){
+            if (attr.type !== "VALUE"){
                 attr.throw("Expected valued attribute");
             }
-        } else if (conf_attr.type == "enum"){
-            const attr = attr_dict[conf_attr.name]
-            if (attr.type !== "value"){
+        } else if (conf_attr.type == "ENUM"){
+            const attr = attr_dict[conf_attr.name];
+            if (attr.type !== "VALUE"){
                 attr.throw("Expected enum attribute");
             }
             attr.value = attr.value.toUpperCase();
             if (conf_attr.options.includes(attr.value)){
-                attr.type = "enum";
+                attr.type = "ENUM";
             } else {
                 attr.value_throw("Invalid enum option");
             }
