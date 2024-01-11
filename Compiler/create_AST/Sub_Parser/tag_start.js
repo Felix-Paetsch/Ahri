@@ -29,7 +29,8 @@ export default (tag_tokens) => {
                 name: attr_string_token.value,
                 value: attr_value_token.value,
                 type: "value",
-                throw: attr_string_token.throw
+                throw: attr_string_token.throw,
+                value_throw: attr_value_token.throw
             });
         } else {
             attributes.push({

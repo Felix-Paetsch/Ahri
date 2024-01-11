@@ -7,7 +7,7 @@
   "scripts": {
     "testing": "nodemon --ext js,md ./Compiler/build.js",
     "testing_resources": "nodemon --ext js,md ./Compiler/test_resources.js",
-    "test_build": "nodemon --ext js,md ./Compiler/test_build.js",
+    "test_build": "nodemon --ext js,md,json ./Compiler/test_build.js",
     "build": "node ./Compiler/build.js",
     "build:watch": "nodemon ./Compiler/build.js",
     "server": "node ./Server/index.js",

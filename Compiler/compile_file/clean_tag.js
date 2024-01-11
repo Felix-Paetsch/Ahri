@@ -5,6 +5,124 @@ export default function clean_tag(tag, resources){
         tag.throw(`Tag name '${ tag.tag_name }' doesn't exist`);
     }
 
+    add_utils(tag);
+
     const tag_conf = tag_arr[0];
     tag.tag_conf = tag_conf;
+
+    update_attributes(tag);
+    handle_string_attributes(tag);
+}
+
+function update_attributes(tag){
+    tag.get_set("attributes", []);
+
+    const attr_dict = {};
+    for (const attr of tag.attributes){
+        attr.name = attr.name.toUpperCase();
+        attr_dict[attr.name.toLowerCase()] = attr;
+        attr_dict[attr.name.toUpperCase()] = attr;
+    }
+
+    for (const conf_attr of tag.tag_conf.attributes){
+        const current_attr = attr_dict[conf_attr.name];
+
+        // Add non present boolean tags
+        if (conf_attr.type == "boolean" && typeof current_attr == "undefined"){
+            const attr = {
+                name: conf_attr.name,
+                value: false,
+                type: conf_attr.type,
+                throw: tag.throw
+            }
+
+            attr_dict[attr.name.toLowerCase()] = attr;
+            attr_dict[attr.name.toUpperCase()] = attr;
+        }
+
+        // Assure that tag is present if it is required
+        if (
+            conf_attr.required 
+            && conf_attr.default == null 
+            && typeof attr_dict[conf_attr.name.toUpperCase()] == "undefined"
+        ){
+            tag.throw(`Missing required argument '${ conf_attr.name }'`);
+        }
+
+        // Create tag
+        if (typeof current_attr == "undefined"){
+            const attr = {
+                name: conf_attr.name,
+                value: conf_attr.default,
+                type: conf_attr.type,
+                throw: tag.throw
+            }
+
+            attr_dict[attr.name.toLowerCase()] = attr;
+            attr_dict[attr.name.toUpperCase()] = attr;
+        }
+
+        // Check that type matches
+        if (conf_attr.type == "boolean"){
+            const attr = attr_dict[conf_attr.name]
+            if (attr.type !== "boolean"){
+                if (attr.toLowerCase() == "false"){
+                    attr.type = "boolean";
+                    attr.value = false;
+                } else if (attr.toLowerCase() == "true"){
+                    attr.type = "boolean";
+                    attr.value = true;
+                } else {
+                    attr.throw("Expected boolean attribute");
+                }
+            }
+        } else if (conf_attr.type == "value"){
+            const attr = attr_dict[conf_attr.name]
+            if (attr.type !== "value"){
+                attr.throw("Expected valued attribute");
+            }
+        } else if (conf_attr.type == "enum"){
+            const attr = attr_dict[conf_attr.name]
+            if (attr.type !== "value"){
+                attr.throw("Expected enum attribute");
+            }
+            attr.value = attr.value.toUpperCase();
+            if (conf_attr.options.includes(attr.value)){
+                attr.type = "enum";
+            } else {
+                attr.value_throw("Invalid enum option");
+            }
+        }
+    }
+}
+
+function handle_string_attributes(tag){
+    tag.get_set("string_attributes", []);
+
+    tag.assert(
+        tag.string_attributes.length >= tag.tag_conf.string_attributes[0],
+        "Number of string attributes to low"
+    );
+    
+    tag.assert(
+        tag.string_attributes.length <= tag.tag_conf.string_attributes[1],
+        "Number of string attributes to high"
+    );
+}
+
+function add_utils(tag){
+    tag.assert = function assert(b, err) {
+        if (!b){
+            this.throw(err);
+        }
+    }
+
+    tag.get_set = (function (key, def = null) {
+        if (this.hasOwnProperty(key)){
+            return this[key]
+        }
+
+        this[key] = def;
+        return def;
+    }).bind(tag);
 }

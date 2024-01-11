@@ -16,6 +16,9 @@ export default function update_component_template_json(CONF, folder){
     update_or_create_js_files_key(CONF, folder);
 
     CONF.get_set("string_attributes", 0);
+    if (typeof CONF.string_attributes === 'number' && !isNaN(CONF.string_attributes)){
+        CONF.string_attributes = [CONF.string_attributes, CONF.string_attributes];
+    }
 
     if (!(CONF.get_set("attributes", []) instanceof Array)){
         CONF.attributes = [CONF.attributes];
@@ -31,13 +34,14 @@ export default function update_component_template_json(CONF, folder){
         }
 
         if (typeof a.options !== "undefined"){
-            a.type = "ENUM"
+            a.type = "enum";
+            a.options = a.options.map(v => v.toUpperCase());
         }
 
         if (typeof a.type == "undefined"){
-            a.type == "BOOLEAN"
+            a.type == "boolean"
         }
 
-        a = a.toUpperCase();
+        a.name = a.name.toUpperCase();
     });
 }
