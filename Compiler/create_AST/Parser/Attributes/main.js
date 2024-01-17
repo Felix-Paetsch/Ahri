@@ -1,4 +1,4 @@
-import { assert, invalid_path } from '../../debug/main.js';
+import { assert, invalid_path } from '../../../debug/main.js';
 
 export default function parse_attributes(token_walker){
     const attributes = [];

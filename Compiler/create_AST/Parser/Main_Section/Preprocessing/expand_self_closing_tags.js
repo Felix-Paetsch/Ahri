@@ -1,4 +1,4 @@
-import { assert } from '../../../debug/main.js';
+import { assert } from '../../../../debug/main.js';
 
 export default function expand_self_closing_tags(token_walker){
     assert(token_walker.current() === false && token_walker.look_ahead() !== false);

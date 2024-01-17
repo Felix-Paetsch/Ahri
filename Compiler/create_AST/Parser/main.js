@@ -1,7 +1,7 @@
 import TokenWalker from "./token_walker.js";
 import parse_attributes from "./Attributes/main.js";
 import parse_main_section from "./Main_Section/main.js";
-import { assert  } from "../debug/main.js";
+import { assert  } from "../../debug/main.js";
 
 export default function parse(tokens) {
     const token_walker = new TokenWalker(tokens);

@@ -1,4 +1,4 @@
-import { assert, invalid_path } from '../../../debug/main.js';
+import { assert, invalid_path } from '../../../../debug/main.js';
 
 export default function replace_list_items(token_walker){
     let indent_amt_stack = [0];

@@ -1,4 +1,4 @@
-import { assert } from '../../debug/main.js'
+import { assert } from '../../../debug/main.js'
 import sub_parse_tag from "../../Sub_Parser/tag_start.js";
 
 export default function tokenize_tag_start(text_walker){

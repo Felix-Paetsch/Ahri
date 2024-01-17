@@ -1,4 +1,4 @@
-import { assert } from '../../../debug/main.js';
+import { assert } from '../../../../debug/main.js';
 
 export default function replace_h1_to_h6_with_tags(token_walker){
     assert(token_walker.current() === false && token_walker.look_ahead() !== false);

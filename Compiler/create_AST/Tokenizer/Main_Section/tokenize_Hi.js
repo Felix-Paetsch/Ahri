@@ -1,4 +1,4 @@
-import { assert } from '../../debug/main.js'
+import { assert } from '../../../debug/main.js'
 import parse_plain_text from "../../Sub_Parser/plain_text.js";
 
 export default function tokenize_Hi(text_walker){

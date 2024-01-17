@@ -1,4 +1,4 @@
-import { assert } from '../debug/main.js'
+import { assert } from '../../debug/main.js'
 import TokenWalker from "../Parser/token_walker.js";
 
 export default (tag_tokens) => {

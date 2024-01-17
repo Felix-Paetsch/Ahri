@@ -1,4 +1,4 @@
-import { assert } from '../../../debug/main.js';
+import { assert } from '../../../../debug/main.js';
 
 export default function remove_new_lines(token_walker){
     assert(token_walker.next().type == "SECTION_SEPERATOR");

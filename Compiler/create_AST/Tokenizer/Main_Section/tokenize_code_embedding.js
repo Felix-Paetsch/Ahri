@@ -1,4 +1,4 @@
-import { assert } from '../../debug/main.js'
+import { assert } from '../../../debug/main.js'
 import tokenize_end_line_whitespace from "../Common/tokenize_end_line_whitespace.js"
 import parse_code_embedding from "../../Sub_Parser/code_embedding.js";
 

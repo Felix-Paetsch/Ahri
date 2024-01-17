@@ -1,4 +1,4 @@
-import { assert } from '../../debug/main.js'
+import { assert } from '../../../debug/main.js'
 import tokenize_end_line_whitespace from './tokenize_end_line_whitespace.js';
 
 export default function tokenize_multi_line_comment(text_walker){

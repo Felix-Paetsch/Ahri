@@ -1,4 +1,4 @@
-import { assert } from '../../../debug/main.js';
+import { assert } from '../../../../debug/main.js';
 
 export default function insert_first_section_sep(token_walker){
     assert(token_walker.current() === false);

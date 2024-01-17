@@ -1,5 +1,6 @@
 import clean_tag from "./clean_tag.js";
 import get_tag_required_resources from "./get_tag_required_resources.js";
+import add_tag_rendering_function from "./tag_render_functions/add_tag_rendering_function.js";
 
 export default function process_tags(file_AST, resources){
     let iterator;
@@ -15,7 +16,6 @@ export default function process_tags(file_AST, resources){
 
     const js_dependencies = [];
     const css_dependencies = [];
-    const code_snippet_files = [];
 
     for (const tag of iterator){
         if (tag.type !== "CODE_EMBEDDING"){
@@ -24,6 +24,8 @@ export default function process_tags(file_AST, resources){
             js_dependencies.push(...js);
             css_dependencies.push(...css);
         }
+
+        add_tag_rendering_function(tag);
     }
 
     js_dependencies.sort((a, b) => {
@@ -42,8 +44,7 @@ export default function process_tags(file_AST, resources){
 
     return {
         js_dependencies,
-        css_dependencies,
-        code_snippet_files
+        css_dependencies
     };
 }
 

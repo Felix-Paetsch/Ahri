@@ -1,4 +1,4 @@
-import { assert } from '../../debug/main.js'
+import { assert } from '../../../debug/main.js'
 
 import tokenize_spaces from './tokenize_spaces.js';
 import tokenize_single_line_comment from '../Common/tokenize_single_line_comment.js';

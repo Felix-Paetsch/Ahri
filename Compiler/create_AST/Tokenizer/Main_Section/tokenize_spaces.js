@@ -1,4 +1,4 @@
-import { assert } from '../../debug/main.js'
+import { assert } from '../../../debug/main.js'
 
 export default function tokenize_whitespace(text_walker){
     assert(text_walker.current() == " ");

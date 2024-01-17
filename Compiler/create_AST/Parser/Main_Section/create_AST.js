@@ -1,4 +1,4 @@
-import { assert, invalid_path } from "../../debug/main.js";
+import { assert, invalid_path } from "../../../debug/main.js";
 import TokenWalker from './../token_walker.js';
 
 export default function create_AST(token_walker){
