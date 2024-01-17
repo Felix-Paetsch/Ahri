@@ -67,8 +67,8 @@ function rendering_throw(msg, internal = false, fp = ""){
 export function update_rendering_object_for_template(
     rendering_object, file_AST, resources, css_dependencies, js_dependencies
 ){
-    rendering_object.css_req  = css_dependencies.map(d => d.path);
-    rendering_object.js_req   = {
+    rendering_object.css_requirements  = css_dependencies.map(d => d.path);
+    rendering_object.js_requirements   = {
         page_begin: js_dependencies.filter(r => r.position == "DOCUMENT_BEGIN").map(r => {
             return {
                 path: r.path,

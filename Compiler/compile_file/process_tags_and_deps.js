@@ -2,19 +2,19 @@ import clean_tag from "./clean_tag.js";
 import add_tag_rendering_function from "./tag_render_functions/add_tag_rendering_function.js";
 
 export default function process_tags(file_AST, resources, rendering_object = {}){
-    let iterator;
-    if (resources.page_template.has_content_sections){
-        iterator = tag_iterator(file_AST.body);
-    } else {
-        if (file_AST.body.length > 1){
-            file_AST.throw("Template doesn't support content sections");
-        }
-
-        iterator = tag_iterator(file_AST.body[0]);
+    if (!resources.page_template.has_content_sections && file_AST.body.length > 1){
+        file_AST.throw("Template doesn't support content sections");
     }
 
-    const js_dependencies = [];
-    const css_dependencies = [];
+    const section_children = [];
+    for (const section of file_AST.body){
+        section_children.push(...section.children)
+    }
+
+    const iterator = tag_iterator(section_children);
+
+    const js_dependencies = [...resources.page_template.js_files];
+    const css_dependencies = [...resources.page_template.css_files];
 
     for (const tag of iterator){
         if (tag.type !== "CODE_EMBEDDING"){

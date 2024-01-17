@@ -1,0 +1,6 @@
+{
+    "page_template": true,
+    "has_content_sections": true,
+    "ejs_entry": "./entry.ejs",
+    "descr": "Slide Show"
+}

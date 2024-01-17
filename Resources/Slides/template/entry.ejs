@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whaaaaa!</title>
+
+    <% for (const css_req of css_requirements){ %>
+        <link rel="stylesheet" type="text/css" href="<%- css_req %>">
+    <% } %>
+    <% for (const js_req of js_requirements.page_begin){ %>
+        <%- `<script ${ js_req.is_module ? 'type="module"' : "" } src="${ js_req.path }"></script>` %>
+    <% } %>
+</head>
+<body>
+    <% for (const cs of content_sections) { %>
+        <div class="content_section">
+            <% for (const child of cs.children) { %>
+                <%- child.render_self() %>
+            <% } %>
+        </div>
+    <% } %>
+
+    <% for (const js_req of js_requirements.page_end){ %>
+        <%- `<script ${ js_req.is_module ? 'type="module"' : "" } src="${ js_req.path }"></script>` %>
+    <% } %>
+</body>
+</html>

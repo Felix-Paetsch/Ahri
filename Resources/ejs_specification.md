@@ -21,7 +21,7 @@ The parsed page attributes.
 These include the attributes you specify (all are present, perhaps though with value `null`).
 Aditionally these include all other attributes set by the user. It is an object where the key is the attribute uppercased or lowercased (both are present).
 
-#### `css_req`
+#### `css_requirements`
 A list of strings of paths to css files you need to include:
 
 ```ejs
@@ -30,7 +30,7 @@ A list of strings of paths to css files you need to include:
     <% } %>
 ```
 
-#### `js_req`
+#### `js_requirements`
 An object like:
 
 ```js
@@ -45,7 +45,17 @@ An object like:
 
 where `page_begin` should be ofc loaded at the beginning and `page_end` at the end. Additionally, some are modules some are not and they should be importet as such.
 
-Code sections follow in the future.
+```ejs
+
+    <% for (const js_req of js_requirements.page_begin){ %>
+        <%- `<script ${ js_req.is_module ? 'type="module"' : "" } src="${ js_req.path }"></script>` %>
+    <% } %>
+    
+    <% for (const js_req of js_requirements.page_end){ %>
+        <%- `<script ${ js_req.is_module ? 'type="module"' : "" } src="${ js_req.path }"></script>` %>
+    <% } %>
+
+```
 
 #### content_sections
 This is an array with the content. Each section is represented by a section tag. If you specified you do not want content sections in the json file, then instead you get "content"

@@ -54,7 +54,7 @@ export default function remove_new_lines(token_walker){
             ]);
 
             while (token_walker.current().type == "NEW_LINE" && ["TEXT_SECTION", "MULTILINE_MATH"].includes(token_walker.look_ahead(1).type)){
-                const text_token = token_walker.look_ahead(2);
+                const text_token = token_walker.look_ahead(1);
                 token_walker.insert_token_before_current([
                     {
                         type: "TAG_START",
@@ -65,7 +65,7 @@ export default function remove_new_lines(token_walker){
                             type: "VALUE",
                             throw: text_token.throw
                         }],
-                        string_attributes: [text_token.value],
+                        string_attributes: [text_token.value.trim()],
                         amt: indent_amt_stack[indent_amt_stack.length - 1] + 2,
                         position: text_token.position,
                         throw: text_token.throw,

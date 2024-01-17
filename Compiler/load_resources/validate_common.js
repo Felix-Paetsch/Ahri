@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { encode } from "punycode";
 
 export function update_or_create_css_files_key(CONF, folder){
     if (CONF.get_set("css_files", null) == null){
@@ -7,7 +8,7 @@ export function update_or_create_css_files_key(CONF, folder){
                                 .filter(file => path.extname(file) === '.css')
                                 .map(f => {
                                     return {
-                                        "path": path.join(folder, f),
+                                        "path": "/" + path.join(folder, f),
                                         "loading_index": 5
                                     }}
                                 );
@@ -23,10 +24,12 @@ export function update_or_create_css_files_key(CONF, folder){
                 "path": CONF["css_files"][i]
             }
         }
-
+        
         if (CONF["css_files"][i].path.startsWith("./")){
-            CONF["css_files"][i].path = path.join(folder, CONF["css_files"][i].path);
+            CONF["css_files"][i].path = "/" + path.join(folder, CONF["css_files"][i].path);
         }
+
+        CONF["css_files"][i].path = CONF["css_files"][i].path.replace(/\\/g, "/");
 
         if (typeof CONF["css_files"][i]["loading_index"] == "undefined"){
             CONF["css_files"][i]["loading_index"] = 5
@@ -49,17 +52,19 @@ export function update_or_create_js_files_key(CONF, folder){
         CONF["js_files"] = [CONF["js_files"]]
     }
 
-    for (let i = 0; i < CONF["css_files"].length; i++){
+    for (let i = 0; i < CONF["js_files"].length; i++){
         if (typeof CONF["js_files"][i] == "string"){
             CONF["js_files"][i] = {
-                "path": CONF["css_files"][i]
+                "path": CONF["js_files"][i]
             }
         }
         
 
         if (CONF["js_files"][i].path.startsWith("./")){
-            CONF["js_files"][i].path = path.join(folder, CONF["js_files"][i].path);
+            CONF["js_files"][i].path = "/" + path.join(folder, CONF["js_files"][i].path);
         }
+
+        CONF["js_files"][i].path = CONF["js_files"][i].path.replace(/\\/g, "/");
 
         if (typeof CONF["js_files"][i]["loading_index"] == "undefined"){
             CONF["js_files"][i]["loading_index"] = 5
@@ -95,11 +100,13 @@ export function create_ejs_entry(CONF, folder){
                 CONF.throw("Unable to determine the EJS entry file.");
             }
         }
-
-        if (CONF.ejs_entry.startsWith("./")){
-            CONF.ejs_entry = path.join(folder, CONF.ejs_entry);
-        }
     }
+    
+    if (CONF.ejs_entry.startsWith("./")){
+        CONF.ejs_entry = path.join(folder, CONF.ejs_entry);
+    }
+
+    CONF.ejs_content = fs.readFileSync(CONF.ejs_entry, "utf8");
 }
 
 export function create_descr(CONF, folder){
