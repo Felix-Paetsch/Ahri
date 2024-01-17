@@ -1,8 +1,7 @@
 import clean_tag from "./clean_tag.js";
 import get_tag_required_resources from "./get_tag_required_resources.js";
-import get_code_snippet_required_resources from "./get_code_snippet_required_resources.js";
 
-export default function process_tags(file_AST, resources, external_files_prefix){
+export default function process_tags(file_AST, resources){
     let iterator;
     if (resources.page_template.has_content_sections){
         iterator = tag_iterator(file_AST.body);
@@ -19,12 +18,7 @@ export default function process_tags(file_AST, resources, external_files_prefix)
     const code_snippet_files = [];
 
     for (const tag of iterator){
-        if (tag.type == "CODE_EMBEDDING"){
-            const { js, css, code_snippets } = get_code_snippet_required_resources(tag);
-            js_dependencies.push(...js);
-            css_dependencies.push(...css);
-            code_snippet_files.push(...code_snippets);
-        } else {
+        if (tag.type !== "CODE_EMBEDDING"){
             clean_tag(tag, resources);
             const { js, css } = get_tag_required_resources(tag);
             js_dependencies.push(...js);

@@ -24,7 +24,7 @@ This returns the config files for the page template and the loaded tags as follo
     },
     tags: [
         {
-            tag_name: 'section',                      // Lowercased
+            tag_name: 'SECTION',                      // Uppercased
             get_set: [Function: bound ],
             assert: [Function (anonymous)],
             throw: [Function (anonymous)],

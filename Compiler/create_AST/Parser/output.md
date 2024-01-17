@@ -45,7 +45,8 @@ It will look like this:
             "tokens": [],
             "position": start_pos,
             language,
-            dependencies,
+            dependencies, 
+            // note: currently dependencies are ignored && only valid deps are js, js_module, html, css
             code,
             throw: (msg) => {}
         }]
