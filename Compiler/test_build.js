@@ -15,4 +15,5 @@ const fileContents = readFileSync(fp, 'utf8');
 
 const fileAST   = create_AST_from_string(fileContents, fp);
 const resources = load_resources("./Resources");
-compile_file(fileAST, resources);
+const file_string = compile_file(fileAST, resources);
+console.log(file_string);

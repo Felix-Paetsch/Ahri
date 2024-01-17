@@ -115,5 +115,5 @@ Import all css files in the directory (only on same level as `config.json`)
 # About paths
 Paths to files should have the following form:
 - URL:                           https://* or http://*
-- Relative to *.json:            $/hello.ejs
-- Relative to website_name.de:   §/css/hello_you.js
+- Relative to *.json:            ./hello.ejs
+- Relative to website_name.de:   /whaa.js

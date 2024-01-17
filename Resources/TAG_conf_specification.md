@@ -166,5 +166,5 @@ With attribute names and enum values casing doesnt matter.
 # About paths
 Paths to files should have the following form:
 - URL:                           https://* or http://*
-- Relative to *.json (or .md):   $/hello.ejs
-- Relative to website_name.de:   §/css/hello_you.js
+- Relative to *.json (or .md):   ./hello.ejs
+- Relative to website_name.de:   /wha.js

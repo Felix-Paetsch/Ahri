@@ -2,8 +2,8 @@
     "page_template": true,
     "tag_name": "LIST_ITEM",
     "js_files": [{
-        "path": "$/entry.js",
+        "path": "./entry.js",
         "position": "DOCUMENT_BEGIN | DOCUMENT_END | AFTER_EACH_COMPONENT"
     }],
-    "descr": "$/wha.md"
+    "descr": "./wha.md"
 }

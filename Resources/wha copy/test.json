@@ -5,13 +5,13 @@
     "ejs_entry": "./component.ejs",
     "descr": "./descr.md",
     "js_files": [{
-        "path": "$/entry.js",
+        "path": "./entry.js",
         "position": "DOCUMENT_BEGIN",
         "loading_index": 2,
         "is_module": true
     }],
     "css_files": [{
-        "path": "$/entry.css",
+        "path": "./entry.css",
         "loading_index": 2
     }],
     "string_attributes": 2,

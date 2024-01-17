@@ -47,20 +47,6 @@ where `page_begin` should be ofc loaded at the beginning and `page_end` at the e
 
 Code sections follow in the future.
 
-#### to_url(fp: fp_obj)
-The paths you use are all relative to the .ejs file. If you want to have files starting with $/ or §/ (probably from the user) you can call this function.
-The first argument should either be a string or an object
-```js
-_={
-    value: "",
-    throw: () => {}
-}
-```
-where throw gives an error if the fp is illformatted.
-If given a string this will always throw an error if the value is illformatted!
-If you want different behaviour set throw accordingly.
-You should also use to_url for any file you want to import from "website.path/smth" with "§". For paths relative to the file you dont need to do "$".
-
 #### content_sections
 This is an array with the content. Each section is represented by a section tag. If you specified you do not want content sections in the json file, then instead you get "content"
 
@@ -79,6 +65,9 @@ The content section has children. Those are the tags for that section. You may r
     <% } %>
 ```
 
+#### data
+An object every render thing has access to
+
 #### throw(err)
 #### assert(b, err)
 #### internal_throw(err)
@@ -91,14 +80,3 @@ The ouput of your file will be an ejs file. You can use
     <%%- CONF.host %%>
 ```
 To escape stuff.
-
-## Expections for rendering context of server
-We have to see about this. Ideally i would want to keep this minmal. We expect these functions:
-
-```js
-    to_absolute_path("/url");
-```
-
-#### Check:
-escape "<%" and "%>" => boolean default true, there might be cases you want this..
-=> Rendering config

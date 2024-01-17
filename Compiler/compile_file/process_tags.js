@@ -1,8 +1,7 @@
 import clean_tag from "./clean_tag.js";
-import get_tag_required_resources from "./get_tag_required_resources.js";
 import add_tag_rendering_function from "./tag_render_functions/add_tag_rendering_function.js";
 
-export default function process_tags(file_AST, resources){
+export default function process_tags(file_AST, resources, rendering_object = {}){
     let iterator;
     if (resources.page_template.has_content_sections){
         iterator = tag_iterator(file_AST.body);
@@ -20,12 +19,11 @@ export default function process_tags(file_AST, resources){
     for (const tag of iterator){
         if (tag.type !== "CODE_EMBEDDING"){
             clean_tag(tag, resources);
-            const { js, css } = get_tag_required_resources(tag);
-            js_dependencies.push(...js);
-            css_dependencies.push(...css);
+            js_dependencies.push(...tag.tag_conf.js_files.filter(f => f.position !== "AFTER_CONTENT"));
+            css_dependencies.push(...tag.tag_conf.css_files);
         }
 
-        add_tag_rendering_function(tag);
+        add_tag_rendering_function(tag, rendering_object);
     }
 
     js_dependencies.sort((a, b) => {

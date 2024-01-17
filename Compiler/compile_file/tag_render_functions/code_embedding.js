@@ -23,5 +23,6 @@ export default function add_code_emedding_rendering_fun(tag){
         }
         return;
     }
+    
     tag.throw("Invalid code embedding type!")
 }
