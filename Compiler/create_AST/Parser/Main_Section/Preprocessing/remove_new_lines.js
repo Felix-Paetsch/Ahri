@@ -1,6 +1,7 @@
 import { assert } from '../../../../debug/main.js';
 
 export default function remove_new_lines(token_walker){
+    console.log(token_walker.get_tokens());
     assert(token_walker.next().type == "SECTION_SEPERATOR");
     let indent_amt_stack = [0];
 
@@ -83,10 +84,8 @@ export default function remove_new_lines(token_walker){
 
                 token_walker.delete_next_token();
                 token_walker.delete_current_token();
+                token_walker.next();
             }
-
-            token_walker.current().test = "WHAAA";
-            token_walker.next();
 
             token_walker.insert_token_before_current([
                 {

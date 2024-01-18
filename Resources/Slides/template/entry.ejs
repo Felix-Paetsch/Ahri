@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whaaaaa!</title>
+    <title>Präsentation</title>
 
     <% for (const css_req of css_requirements){ %>
         <link rel="stylesheet" type="text/css" href="<%- css_req %>">
@@ -15,9 +15,11 @@
 <body>
     <% for (const cs of content_sections) { %>
         <div class="content_section">
-            <% for (const child of cs.children) { %>
-                <%- child.render_self() %>
-            <% } %>
+            <div class="content_section_inner">
+                <% for (const child of cs.children) { %>
+                    <%- child.render_self() %>
+                <% } %>
+            </div>
         </div>
     <% } %>
 
