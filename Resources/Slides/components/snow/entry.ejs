@@ -1,0 +1,10 @@
+<% id = get_uid() %>
+<span id="<%- id %>"></span>
+
+<script type="module">
+    import { createSnowflake } from '<%- current_dir %>/snowflake.js';
+
+    setInterval(() => {
+        createSnowflake('<%- id %>');
+    }, 200);
+</script>

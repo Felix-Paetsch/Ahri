@@ -1,0 +1,18 @@
+@keyframes fall {
+    0% { top: 0%; }
+    100% { 
+        top: 95%; 
+        display: none;
+    }
+}
+
+.snowflake {
+    position: absolute;
+    color: #FFF;
+    opacity: 0.8;
+    font-size: 2em;
+    user-select: none;
+    z-index: 1000;
+    animation-name: fall;
+    top: 95%;
+}

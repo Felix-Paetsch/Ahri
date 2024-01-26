@@ -24,7 +24,8 @@ export default function add_tag_rendering_fun(tag, rendering_object){
 
 function tag_rendering_utils(tag){
     return {
-        get_attr: (...args) => get_attr(tag, ...args)
+        get_attr: (...args) => get_attr(tag, ...args),
+        current_dir: "/" + tag.tag_conf.folder.replace(/\\/g, "/")
     }
 }
 

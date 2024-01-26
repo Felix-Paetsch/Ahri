@@ -24,6 +24,7 @@ export default function tokenize_sep(text_walker){
     const current_after_sep = text_walker.current();
 
     if (current_after_sep === false || current_after_sep === "\n"){
+        text_walker.previous();
         return ret
     }
 
@@ -38,13 +39,12 @@ export default function tokenize_sep(text_walker){
         }
     }
 
-    text_walker.previous();
-
     ret.push({
         "type": "SECTION_SEPERATOR_COMMENT",
         "value": "",
         "original_value": sep_comment,
         "position": sep_comment_start_position
     });
+
     return ret;
 }

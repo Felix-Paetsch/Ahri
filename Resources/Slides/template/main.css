@@ -21,6 +21,7 @@ body{
     height: 90vh;
     background-color: #26547C;
     padding: 3em;
+    overflow: hidden;
 }
 
 .content_section_inner{

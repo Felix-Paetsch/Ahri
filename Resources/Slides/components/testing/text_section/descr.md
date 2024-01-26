@@ -1,1 +1,0 @@
-Renders a section of text, usually paragraph.

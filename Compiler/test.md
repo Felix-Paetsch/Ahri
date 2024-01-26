@@ -1,8 +1,6 @@
 [theme:whaa]
 
-* Im totalen Haltverbots
-
-==============================================================
+!> snowflakes
 
 # Der tote Bote
 
@@ -21,6 +19,8 @@ y &= \sqrt{1 - x^2}
 \end{align*}
 $$
 
+===================
+
 Der Täter konnte unerkannt entweichen.
 Und auf dem Toastbrot klebt ein Postwertzeichen;
 drunter steht – nach Vorschrift zwei –
@@ -28,7 +28,6 @@ wem das Brot geschrieben sei,
 und der Absender natürlich auch dabei.
 
 =============================================================
-
 Das ist die Ballade von dem Mann,
 der ein Brot verschicken wollte und nicht kann.
 Er erschlug den Boten fix,

@@ -21,6 +21,23 @@ The parsed page attributes.
 These include the attributes you specify (all are present, perhaps though with value `null`).
 Aditionally these include all other attributes set by the user. It is an object where the key is the attribute uppercased or lowercased (both are present).
 
+#### `get_attribute(attr_name, attr_value)`
+Gives you the attribute with that name. It looks like:
+
+```js
+{
+    name: "attr_name_uppercase",
+    value: "attr value",
+    type: "attr_type",
+    "throw": (e) => { throw new Error(e) } 
+    // The error will be shown to the user at the position for the tag
+}
+```
+
+If you leave attr_value empty it will either return you an object like above or throw an error.
+If you set attr_value it will try to return the object above. If the attr is not set however it
+uses your attr_value as a fallback.
+
 #### `css_requirements`
 A list of strings of paths to css files you need to include:
 
@@ -29,6 +46,25 @@ A list of strings of paths to css files you need to include:
         <link rel="stylesheet" type="text/css" href="<%- css_req %>">
     <% } %>
 ```
+
+#### `current_dir`
+The rendered files directory path relativ to the server. 
+Usefull i.e. when you need to import a file, butt cannot do so using conventional imports via the config file.
+Example usecase:
+
+```html
+<script type="module">
+    import { createSnowflake } from '<%- current_dir %>/snowflake.js';
+
+    setInterval(() => {
+        createSnowflake('<%- id %>');
+    }, 200);
+</script>
+```
+
+Hint:
+If you render ./component and import in there from ./component/subcomponent
+the current_dir will still be that of ./component!
 
 #### `js_requirements`
 An object like:
