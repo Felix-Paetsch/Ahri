@@ -1,6 +1,6 @@
 [theme:whaa]
 
-* Im totalen Haltverbot
+* Im totalen Haltverbots
 
 ==============================================================
 
