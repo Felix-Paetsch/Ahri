@@ -1,7 +1,6 @@
 import { assert } from '../../../../debug/main.js';
 
 export default function remove_new_lines(token_walker){
-    console.log(token_walker.get_tokens());
     assert(token_walker.next().type == "SECTION_SEPERATOR");
     let indent_amt_stack = [0];
 
@@ -38,7 +37,7 @@ export default function remove_new_lines(token_walker){
             continue;
         }
 
-        if (token.type == "TEXT_SECTION"){
+        if (["TEXT_SECTION", "MULTILINE_MATH"].includes(token.type)){
             token_walker.previous(); // The now current token is a NEW_LINE and the after the Text section from above
 
             token_walker.insert_token_before_current([
@@ -62,7 +61,7 @@ export default function remove_new_lines(token_walker){
                         tag_name: "TEXT_PARAGRAPH",
                         attributes: [{
                             name: "text_type",
-                            value: text_token.type == "MULTILINE_MATH" ? "PLAIN_TEXT" : "MULTILINE_MATH",
+                            value: text_token.type == "MULTILINE_MATH" ? "MULTILINE_MATH" : "PLAIN_TEXT",
                             type: "VALUE",
                             throw: text_token.throw
                         }],

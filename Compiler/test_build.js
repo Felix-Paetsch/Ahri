@@ -13,8 +13,9 @@ const __dirname = path.dirname(__filename);
 const fp = path.resolve(__dirname, "./test.md");
 const fileContents = readFileSync(fp, 'utf8');
 
+
 const fileAST   = create_AST_from_string(fileContents, fp);
-const resources = load_resources("./Resources");
+const resources = load_resources(["./Resources/Default Components", "./Resources/Slides"]);
 
 compile_file(fileAST, resources).then(s => {
     writeFile("./Server/pages/_rendered_index.ejs", s, (err) => {

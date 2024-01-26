@@ -1,3 +1,9 @@
+[theme:whaa]
+
+* Im totalen Haltverbot
+
+==============================================================
+
 # Der tote Bote
 
 Die Post
@@ -7,6 +13,13 @@ weil der tote Bote dort umringt von Leuten liegt.
 In dem Auto sitzt er tot
 im totalen Haltverbot
 und hält friedlich in der Hand ’ne Scheibe Brot.
+
+$$
+\begin{align*}
+x^2 + y^2 &= 1 \\
+y &= \sqrt{1 - x^2}
+\end{align*}
+$$
 
 Der Täter konnte unerkannt entweichen.
 Und auf dem Toastbrot klebt ein Postwertzeichen;
@@ -33,3 +46,4 @@ Die letzte Leerung war um vierzehn Uhuhur!
 Blickt auf seine Uhr entsetzt –
 kurz vor zwei ist’s eben jetzt –
 und ist außer sich zum Briefkasten gewetzt.
+

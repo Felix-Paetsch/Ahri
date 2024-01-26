@@ -83,6 +83,13 @@ function create_list(tw, current_index_amt){
             type: "boolean",
             throw: tw.current().throw
         });
+    } else {
+        list_token.attributes.push({
+            name: "enumerated",
+            value: false,
+            type: "boolean",
+            throw: tw.current().throw
+        });
     }
 
     tw.insert_token_before_current([

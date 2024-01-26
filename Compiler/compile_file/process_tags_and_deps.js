@@ -1,5 +1,5 @@
 import clean_tag from "./clean_tag.js";
-import add_tag_rendering_function from "./tag_render_functions/add_tag_rendering_function.js";
+import add_rendering_function from "./tag_render_functions/add_rendering_function.js";
 
 export default function process_tags(file_AST, resources, rendering_object = {}){
     if (!resources.page_template.has_content_sections && file_AST.body.length > 1){
@@ -23,7 +23,7 @@ export default function process_tags(file_AST, resources, rendering_object = {})
             css_dependencies.push(...tag.tag_conf.css_files);
         }
 
-        add_tag_rendering_function(tag, rendering_object);
+        add_rendering_function(tag, rendering_object);
     }
 
     js_dependencies.sort((a, b) => {

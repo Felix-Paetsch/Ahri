@@ -1,0 +1,13 @@
+<% if (get_attr("Enumerated").value) { %>
+    <ol>
+        <% for (const child of children) { %>
+            <%- child.render_self() %>
+        <% } %>
+    </ol>
+<% } else { %>
+    <ul>
+        <% for (const child of children) { %>
+            <%- child.render_self() %>
+        <% } %>
+    </ul>
+<% }%>

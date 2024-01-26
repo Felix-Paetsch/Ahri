@@ -1,3 +1,5 @@
+import katex from "katex"
+
 export function create_rendering_object(file_AST){
     function* get_uid() {
         let i = 0;
@@ -38,6 +40,7 @@ export function create_rendering_object(file_AST){
         assert: (b, msg) => {
             if (!b) _throw(msg);
         },
+        katex,
         internal_throw: _internal_throw,
         internal_assert: (b, msg) => {
             if (!b) _internal_throw(msg);
